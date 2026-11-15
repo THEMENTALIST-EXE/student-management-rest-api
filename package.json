@@ -1,0 +1,30 @@
+{
+  "name": "student-management-rest-api",
+  "version": "1.0.0",
+  "description": "HackerEarth Week 07 - RESTful Student Management API built with Node.js and Express.js",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test tests/**/*.test.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api",
+    "crud",
+    "hackerearth",
+    "student-management"
+  ],
+  "author": "J Nishanth Bhat",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}

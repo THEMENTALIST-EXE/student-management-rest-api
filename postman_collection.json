@@ -1,0 +1,260 @@
+{
+  "info": {
+    "_postman_id": "c8e6df10-8b1b-4f92-913a-student-api-v1",
+    "name": "HackerEarth Week 07 — Student Management REST API",
+    "description": "Comprehensive Postman collection for HackerEarth Week 07 Student Management REST API. Demonstrates all 5 CRUD operations, department filtering bonus, and validation/error scenarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET API Health & Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        },
+        "description": "Returns API metadata, status, author info, and route catalog."
+      }
+    },
+    {
+      "name": "2. GET All Students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"]
+        },
+        "description": "Retrieve all students in the in-memory array. Returns HTTP 200 with list and count."
+      }
+    },
+    {
+      "name": "3. GET Filter by Department (Bonus)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students?department=AIML",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"],
+          "query": [
+            {
+              "key": "department",
+              "value": "AIML",
+              "description": "Case-insensitive department search query"
+            }
+          ]
+        },
+        "description": "Filters students matching the specified department (case-insensitive) on the backend array."
+      }
+    },
+    {
+      "name": "4. GET Student by ID - Success (200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/101",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "101"]
+        },
+        "description": "Retrieve an individual student using their unique integer ID."
+      }
+    },
+    {
+      "name": "5. GET Student by ID - Not Found (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/9999",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "9999"]
+        },
+        "description": "Expected failure: returns HTTP 404 when student does not exist."
+      }
+    },
+    {
+      "name": "6. GET Student by ID - Malformed ID (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/abc",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "abc"]
+        },
+        "description": "Expected failure: returns HTTP 400 for non-integer or malformed ID."
+      }
+    },
+    {
+      "name": "7. POST Create Student - Success (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 107,\n  \"name\": \"Aditi Rao\",\n  \"department\": \"ISE\",\n  \"semester\": 3\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"]
+        },
+        "description": "Add a new student record. Returns HTTP 201 with newly created student."
+      }
+    },
+    {
+      "name": "8. POST Create Student - Duplicate ID (409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 101,\n  \"name\": \"Duplicate ID Test\",\n  \"department\": \"CSE\",\n  \"semester\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"]
+        },
+        "description": "Expected failure: returns HTTP 409 Conflict when attempting to use an existing ID."
+      }
+    },
+    {
+      "name": "9. POST Create Student - Validation Error (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 108,\n  \"name\": \"\",\n  \"department\": \"AIML\",\n  \"semester\": 10\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"]
+        },
+        "description": "Expected failure: returns HTTP 400 when body fails field validation (empty name, semester > 8)."
+      }
+    },
+    {
+      "name": "10. PUT Update Student - Success (200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"J Nishanth Bhat\",\n  \"department\": \"AIML\",\n  \"semester\": 7\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students/101",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "101"]
+        },
+        "description": "Update an existing student's name, department, or semester. Original ID is preserved."
+      }
+    },
+    {
+      "name": "11. PUT Update Student - Not Found (404)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Unknown Student\",\n  \"department\": \"CSE\",\n  \"semester\": 6\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students/9999",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "9999"]
+        },
+        "description": "Expected failure: returns HTTP 404 when updating nonexistent student ID."
+      }
+    },
+    {
+      "name": "12. DELETE Student - Success (200)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/102",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "102"]
+        },
+        "description": "Delete student by ID. Returns HTTP 200 with success message and deleted student details."
+      }
+    },
+    {
+      "name": "13. DELETE Student - Not Found (404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/9999",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "9999"]
+        },
+        "description": "Expected failure: returns HTTP 404 when deleting nonexistent student ID."
+      }
+    },
+    {
+      "name": "14. Malformed JSON Body (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"id\": 109, \"name\": broken json"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["students"]
+        },
+        "description": "Expected failure: returns HTTP 400 when client sends malformed JSON syntax."
+      }
+    }
+  ]
+}
