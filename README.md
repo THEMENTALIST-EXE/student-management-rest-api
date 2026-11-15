@@ -392,5 +392,5 @@ To deploy this Express API to a cloud host (such as Render, Railway, Fly.io, or 
 
 ## 👤 Author
 **J Nishanth Bhat**  
-- GitHub: [@NISHANTH-100807](https://github.com/NISHANTH-100807)  
+- GitHub: [@THEMENTALIST-EXE](https://github.com/THEMENTALIST-EXE)  
 - Portfolio: [https://github.com/THEMENTALIST-EXE/developer-profile](https://github.com/THEMENTALIST-EXE/developer-profile)
